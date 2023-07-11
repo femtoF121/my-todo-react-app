@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function AddTodoForm({ onSubmit }) {
+export function TodoAddItemForm({ onSubmit }) {
   const [newItem, setNewItem] = useState("");
 
   function handleSubmit(e) {

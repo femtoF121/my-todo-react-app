@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { AddTodoForm } from "./AddTodoForm";
-import Header from "./Header";
+import { TodoAddItemForm } from "./TodoAddItemForm";
+import TodoTitleInput from "./TodoTitleInput";
 import { TodoList } from "./TodoList";
 
 export function TodoApp() {
@@ -44,9 +44,9 @@ export function TodoApp() {
 
   return (
     <>
-      <Header />
+      <TodoTitleInput />
       <div className="w-full rounded-3xl p-10 bg-gray-50 text-2xl">
-        <AddTodoForm onSubmit={addTodo} />
+        <TodoAddItemForm onSubmit={addTodo} />
         <hr className="mt-12 mb-8 h-0.5 border-t-0 bg-neutral-300 opacity-100 dark:opacity-50" />
         <TodoList
           todos={todos}

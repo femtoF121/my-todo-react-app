@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Header() {
+export default function TodoTitleInput() {
   const [title, setTitle] = useState("");
 
   return (
