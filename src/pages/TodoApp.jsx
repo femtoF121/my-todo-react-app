@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { TodoAddItemForm } from "./TodoAddItemForm";
 import { TodoTitleInput } from "./TodoTitleInput";
 import { TodoList } from "./TodoList";
+import { BurgerMenuButton } from "./BurgerMenuButton";
+import { SideMenu } from "./SideMenu";
 
 export function TodoApp() {
+  const [menuActive, setMenuActive] = useState(false);
   const [todoList, setTodoList] = useState(() => {
     const localValueList = localStorage.getItem("LISTS");
     if (localValueList == null)
@@ -53,15 +56,23 @@ export function TodoApp() {
 
   return (
     <>
-      <TodoTitleInput onChange={changeTodoList} listTitle={todoList.title} />
-      <div className="w-full rounded-3xl p-10 bg-gray-50 text-2xl">
-        <TodoAddItemForm onSubmit={addTodo} />
-        <hr className="mt-12 mb-8 h-0.5 border-t-0 bg-neutral-300 opacity-100 dark:opacity-50" />
-        <TodoList
-          todos={todos}
-          toggleTodo={toggleTodo}
-          deleteTodo={deleteTodo}
-        />
+      <BurgerMenuButton menuActive={menuActive} setMenuActive={setMenuActive} />
+      <SideMenu
+        active={menuActive}
+        setActive={setMenuActive}
+        items={todoList}
+      />
+      <div>
+        <TodoTitleInput onChange={changeTodoList} listTitle={todoList.title} />
+        <div className="w-full rounded-3xl p-10 bg-gray-50 text-2xl">
+          <TodoAddItemForm onSubmit={addTodo} />
+          <hr className="mt-12 mb-8 h-0.5 border-t-0 bg-neutral-300 opacity-100 dark:opacity-50" />
+          <TodoList
+            todos={todos}
+            toggleTodo={toggleTodo}
+            deleteTodo={deleteTodo}
+          />
+        </div>
       </div>
     </>
   );
