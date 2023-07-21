@@ -2,10 +2,11 @@ import React from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { AiOutlineSave } from "react-icons/ai";
 
-export const TodoSaveDelBtns = ({ todoList, todoLists }) => {
+export const TodoSaveDelBtns = ({ todoList, todoLists, save }) => {
   return (
-    <form className="h-12 flex justify-end align-middle text-2xl mt-4">
+    <div className="h-12 flex justify-end align-middle text-2xl mt-4">
       <button
+        onClick={save}
         className="ml-4 flex justify-end items-center border-2 rounded-full border-green-500 
       bg-green-300 px-5 hover:bg-green-400 transition-colors duration-300 ease-in-out"
       >
@@ -19,6 +20,6 @@ export const TodoSaveDelBtns = ({ todoList, todoLists }) => {
         <span>Delete todo</span>
         <AiOutlineDelete className="text-3xl ml-3" />
       </button>
-    </form>
+    </div>
   );
 };

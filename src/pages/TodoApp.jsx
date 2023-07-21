@@ -8,7 +8,7 @@ export function TodoApp() {
   const [todoLists, setTodoList] = useState(() => {
     const localValue = localStorage.getItem("LISTS");
     if (localValue == null)
-      return { id: crypto.randomUUID(), title: "", todos: [] };
+      return [{ id: crypto.randomUUID(), title: "", todos: [] }];
     return JSON.parse(localValue);
   });
   const [lastTodoId, setLastTodoId] = useState(() => {
@@ -16,20 +16,28 @@ export function TodoApp() {
     if (localValue == null) return false;
     return JSON.parse(localValue);
   });
-  const [currentList, setCurrentTodo] = useState(todoLists);
+  const [currentList, setCurrentTodo] = useState(() => {
+    for (let i = 0; i < todoLists.length; i++) {
+      if (todoLists[i].id == lastTodoId) return todoLists[i];
+    }
+  });
   const [todos, setTodos] = useState(currentList.todos);
 
   useEffect(() => {
     changeTodoList();
-  }, [currentList.todos]);
+  }, [todos]);
 
-  useEffect(() => {
-    console.log("something changed");
-    localStorage.setItem("LISTS", JSON.stringify(currentList));
-  }, [currentList.title, currentList.todos]);
+  function saveListChanges() {
+    let toSave = [];
+    for (let i = 0; i < todoLists.length; i++) {
+      if (todoLists[i].id == currentList.id) toSave.push(currentList);
+      toSave.push(todoLists[i]);
+    }
+    localStorage.setItem("LISTS", JSON.stringify(toSave));
+  }
 
   function changeTodoList(title = currentList.title) {
-    setTodoList({ ...currentList, title: title, todos: todos });
+    setCurrentTodo({ ...currentList, title: title, todos: todos });
   }
 
   function addTodo(title) {
@@ -66,7 +74,11 @@ export function TodoApp() {
           onChange={changeTodoList}
           listTitle={currentList.title}
         />
-        <TodoSaveDelBtns todoList={currentList} todoLists={todoLists} />
+        <TodoSaveDelBtns
+          todoList={currentList}
+          todoLists={todoLists}
+          save={saveListChanges}
+        />
       </div>
       <div className="w-full rounded-3xl p-10 bg-gray-50 text-2xl">
         <TodoAddItemForm onSubmit={addTodo} />
