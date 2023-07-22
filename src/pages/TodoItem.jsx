@@ -5,11 +5,11 @@ export function TodoItem({ id, title, completed, toggleTodo, deleteTodo }) {
     <li className="flex items-stretch flex-row-reverse justify-between rounded-md overflow-hidden">
       <button
         onClick={() => deleteTodo(id)}
-        className="pr-3 text-red-500 hover:bg-red-100 peer transition-colors duration-300 ease-in-out"
+        className="pr-3 text-red-500 hover:bg-red-100 peer"
       >
         <FiDelete />
       </button>
-      <label className="p-2 pl-3 peer-hover:bg-red-100 w-full transition-colors duration-300 ease-in-out">
+      <label className="p-2 pl-3 peer-hover:bg-red-100 w-full">
         <input
           type="checkbox"
           checked={completed}
