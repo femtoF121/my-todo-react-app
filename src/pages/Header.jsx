@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-export function TodoTitleInput({ onChange, listTitle }) {
-  const [title, setTitle] = useState(listTitle);
-
-  useEffect(() => {
-    onChange(title);
-  }, [title]);
+export default function Header() {
+  const [title, setTitle] = useState("");
 
   return (
-    <form className="flex flex-col justify-between text-5xl mt-2">
+    <form className="flex flex-col justify-between text-5xl mt-2 mb-8 px-10">
       <div className="relative z-0">
         <input
           type="text"

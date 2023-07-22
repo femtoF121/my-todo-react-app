@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function TodoAddItemForm({ onSubmit }) {
+export function AddTodoForm({ onSubmit }) {
   const [newItem, setNewItem] = useState("");
 
   function handleSubmit(e) {
@@ -33,7 +33,7 @@ export function TodoAddItemForm({ onSubmit }) {
           New item
         </label>
       </div>
-      <button className="border-2 border-blue-400 hover:bg-blue-300 rounded-full bg-blue-200 h-12 transition-colors duration-300 ease-in-out">
+      <button className="border-2 border-blue-400 hover:bg-blue-300 rounded-full bg-blue-200 h-12">
         Add new item
       </button>
     </form>
