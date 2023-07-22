@@ -33,7 +33,7 @@ export function TodoAddItemForm({ onSubmit }) {
           New item
         </label>
       </div>
-      <button className="border-2 border-blue-400 hover:bg-blue-300 rounded-full bg-blue-200 h-12">
+      <button className="border-2 border-blue-400 hover:bg-blue-300 rounded-full bg-blue-200 h-12 transition-colors duration-300 ease-in-out">
         Add new item
       </button>
     </form>
