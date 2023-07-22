@@ -5,7 +5,7 @@ import { TodoList } from "./TodoList";
 import { TodoSaveDelBtns } from "./TodoSaveDelBtns";
 
 export function TodoApp() {
-  const [todoLists, setTodoList] = useState(() => {
+  const [todoLists, setTodoLists] = useState(() => {
     const localValue = localStorage.getItem("LISTS");
     if (localValue == null)
       return [{ id: crypto.randomUUID(), title: "", todos: [] }];
@@ -34,6 +34,12 @@ export function TodoApp() {
       toSave.push(todoLists[i]);
     }
     localStorage.setItem("LISTS", JSON.stringify(toSave));
+  }
+
+  function delCurrentList(id = currentList.id) {
+    setTodoLists((curLists) => {
+      return curLists.filter((list) => list.id !== id);
+    });
   }
 
   function changeTodoList(title = currentList.title) {
@@ -74,11 +80,7 @@ export function TodoApp() {
           onChange={changeTodoList}
           listTitle={currentList.title}
         />
-        <TodoSaveDelBtns
-          todoList={currentList}
-          todoLists={todoLists}
-          save={saveListChanges}
-        />
+        <TodoSaveDelBtns del={delCurrentList} save={saveListChanges} />
       </div>
       <div className="w-full rounded-3xl p-10 bg-gray-50 text-2xl">
         <TodoAddItemForm onSubmit={addTodo} />
