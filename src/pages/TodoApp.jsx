@@ -25,9 +25,7 @@ export function TodoApp() {
       if (todoLists[i].id == lastTodoId) return todoLists[i];
     }
   });
-  const [todos, setTodos] = useState(() =>
-    lastTodoId ? currentList.todos : ""
-  );
+  const [todos, setTodos] = useState(currentList.todos);
 
   useEffect(() => {
     changeTodoList();
@@ -78,14 +76,14 @@ export function TodoApp() {
       });
     });
   }
-  console.log(lastTodoId);
+
   return (
     <>
       <BurgerMenuButton menuActive={menuActive} setMenuActive={setMenuActive} />
       <SideMenu
         active={menuActive}
         setActive={setMenuActive}
-        items={currentList.todos}
+        items={todoLists}
       />
       <div className="px-10 mb-4">
         <TodoTitleInput
