@@ -20,6 +20,7 @@ export function TodoApp() {
     return JSON.parse(localValue);
   });
   const [currentList, setCurrentTodo] = useState(() => {
+    if (!lastTodoId) return todoLists[0];
     for (let i = 0; i < todoLists.length; i++) {
       if (todoLists[i].id == lastTodoId) return todoLists[i];
     }
@@ -84,7 +85,7 @@ export function TodoApp() {
       <SideMenu
         active={menuActive}
         setActive={setMenuActive}
-        items={todoLists}
+        items={currentList.todos}
       />
       <div className="px-10 mb-4">
         <TodoTitleInput
