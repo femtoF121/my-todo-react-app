@@ -16,11 +16,13 @@ export function TodoApp() {
   });
   const [lastTodoId, setLastTodoId] = useState(() => {
     const localValue = localStorage.getItem("LASTTODOID");
-    if (localValue == null) return false;
+    if (localValue == null) {
+      localStorage.setItem("LASTTODOID", JSON.stringify(todoLists[0].id));
+      return todoLists[0].id;
+    }
     return JSON.parse(localValue);
   });
   const [currentList, setCurrentTodo] = useState(() => {
-    if (!lastTodoId) return todoLists[0];
     for (let i = 0; i < todoLists.length; i++) {
       if (todoLists[i].id == lastTodoId) return todoLists[i];
     }
@@ -35,7 +37,7 @@ export function TodoApp() {
     let toSave = [];
     for (let i = 0; i < todoLists.length; i++) {
       if (todoLists[i].id == currentList.id) toSave.push(currentList);
-      toSave.push(todoLists[i]);
+      else toSave.push(todoLists[i]);
     }
     localStorage.setItem("LISTS", JSON.stringify(toSave));
   }
