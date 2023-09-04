@@ -44,10 +44,10 @@ export const SideMenu = ({
               addNewList();
               setActive(!active);
             }}
-            className="h-24 p-4 mb-3 flex justify-center items-center rounded-lg bg-gray-200 
-            hover:cursor-pointer hover:bg-gray-300 ease-in-out duration-300"
+            className="h-24 p-4 mb-3 flex justify-center text-3xl items-center rounded-lg bg-gray-200 
+            hover:cursor-pointer hover:bg-gray-300 hover:text-4xl ease-in-out duration-300"
           >
-            <BsClipboard2Plus className="text-4xl" />
+            <BsClipboard2Plus />
           </li>
         </ul>
       </div>
