@@ -1,8 +1,6 @@
 import { TodoItem } from "./TodoItem";
 
 export function TodoList({ todos, toggleTodo, deleteTodo }) {
-  const nums = [123, 123455, 34231, 543];
-
   return (
     <div>
       <h1 className="font-bold text-4xl mb-5">Things to do:</h1>
