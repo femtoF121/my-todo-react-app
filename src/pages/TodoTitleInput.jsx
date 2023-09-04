@@ -2,20 +2,22 @@ import React, { useEffect, useState } from "react";
 
 export function TodoTitleInput({ onChange, listTitle }) {
   const [title, setTitle] = useState(listTitle);
-
   useEffect(() => {
     onChange(title);
   }, [title]);
 
   return (
-    <form className="flex flex-col justify-between text-5xl mt-2">
+    <form
+      onSubmit={(e) => e.preventDefault()}
+      className="flex flex-col justify-between text-5xl mt-2"
+    >
       <div className="relative z-0">
         <input
           type="text"
           id="item"
           className="block pt-4 pb-0.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-400 peer"
           placeholder=" "
-          value={title}
+          value={listTitle}
           onChange={(e) => setTitle(e.target.value)}
         />
         <label

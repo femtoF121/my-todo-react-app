@@ -14,41 +14,45 @@ export function TodoApp() {
       return [{ id: crypto.randomUUID(), title: "", todos: [] }];
     return JSON.parse(localValue);
   });
-  const [lastTodoId, setLastTodoId] = useState(() => {
-    const localValue = localStorage.getItem("LASTTODOID");
-    if (localValue == null) {
-      localStorage.setItem("LASTTODOID", JSON.stringify(todoLists[0].id));
-      return todoLists[0].id;
-    }
-    return JSON.parse(localValue);
-  });
-  const [currentList, setCurrentTodo] = useState(() => {
-    for (let i = 0; i < todoLists.length; i++) {
-      if (todoLists[i].id == lastTodoId) return todoLists[i];
-    }
-  });
+  const [currentList, setCurrentTodo] = useState(() => todoLists[0]);
   const [todos, setTodos] = useState(currentList.todos);
 
   useEffect(() => {
-    changeTodoList();
+    changeTodos();
   }, [todos]);
 
+  useEffect(() => {
+    saveListChanges();
+    setTodos(currentList.todos);
+  }, [currentList]);
+
   function saveListChanges() {
-    let toSave = [];
+    let res = [];
     for (let i = 0; i < todoLists.length; i++) {
-      if (todoLists[i].id == currentList.id) toSave.push(currentList);
-      else toSave.push(todoLists[i]);
+      if (todoLists[i].id == currentList.id) res.push(currentList);
+      else res.push(todoLists[i]);
     }
-    localStorage.setItem("LISTS", JSON.stringify(toSave));
+    setTodoLists(res);
+    localStorage.setItem("LISTS", JSON.stringify(res));
   }
 
   function delCurrentList(id = currentList.id) {
-    setTodoLists((curLists) => {
-      return curLists.filter((list) => list.id !== id);
-    });
+    if (todoLists.length > 1) {
+      let res = todoLists.filter((list) => list.id !== id);
+      setTodoLists(res);
+      setCurrentTodo(res[0]);
+    }
   }
 
-  function changeTodoList(title = currentList.title) {
+  function addNewList() {
+    let res = todoLists;
+    let newItem = { id: crypto.randomUUID(), title: "", todos: [] };
+    res.push(newItem);
+    setCurrentTodo(newItem);
+    setTodoLists(res);
+  }
+
+  function changeTodos(title = currentList.title) {
     setCurrentTodo({ ...currentList, title: title, todos: todos });
   }
 
@@ -86,19 +90,19 @@ export function TodoApp() {
         active={menuActive}
         setActive={setMenuActive}
         items={todoLists}
+        addNewList={addNewList}
+        currentList={currentList}
+        setCurrentList={setCurrentTodo}
       />
       <div className="px-10 mb-4">
-        <TodoTitleInput
-          onChange={changeTodoList}
-          listTitle={currentList.title}
-        />
+        <TodoTitleInput onChange={changeTodos} listTitle={currentList.title} />
         <TodoSaveDelBtns del={delCurrentList} save={saveListChanges} />
       </div>
       <div className="w-full rounded-3xl p-10 bg-gray-50 text-2xl">
         <TodoAddItemForm onSubmit={addTodo} />
         <hr className="mt-12 mb-8 h-0.5 border-t-0 bg-neutral-300 opacity-100 dark:opacity-50" />
         <TodoList
-          todos={todos}
+          todos={currentList.todos}
           toggleTodo={toggleTodo}
           deleteTodo={deleteTodo}
         />
